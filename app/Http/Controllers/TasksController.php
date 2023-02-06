@@ -25,7 +25,13 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $newTaskDetails = $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'status' => ['required']
+        ]);
+
+        Task::create($newTaskDetails);
     }
 
     /**
@@ -36,7 +42,14 @@ class TasksController extends Controller
      */
     public function show($id)
     {
-        //
+        // Define a variable to store number of tasks
+        $taskCount = Task::count();
+        if ($id <= $taskCount) {
+            $selectedTask = Task::find($id);
+        } else {
+            return "Invalid task !";
+        }
+        return $selectedTask;
     }
 
     /**

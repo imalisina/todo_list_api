@@ -12,7 +12,6 @@ class Task extends Model
         "title",
         "description",
         "status",
-        "timestamps",
     ];
     use HasFactory;
 }
