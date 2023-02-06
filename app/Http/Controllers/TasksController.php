@@ -27,8 +27,6 @@ class TasksController extends Controller
     {
         $newTaskDetails = $request->validate([
             'title' => 'required',
-            'description' => 'required',
-            'status' => ['required']
         ]);
 
         Task::create($newTaskDetails);
