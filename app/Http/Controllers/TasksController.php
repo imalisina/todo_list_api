@@ -43,13 +43,13 @@ class TasksController extends Controller
     public function show($id)
     {
         // Define a variable to store number of tasks
-        $taskCount = Task::count();
-        if ($id <= $taskCount) {
+        if ($id <= Task::count()) {
             $selectedTask = Task::find($id);
+            return $selectedTask;
         } else {
-            return "Invalid task !";
+            // Display an error message with 404 status
+            return response()->json(["error" => "Task not found !", "status" => 404]);
         }
-        return $selectedTask;
     }
 
     /**
@@ -61,7 +61,15 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($id <= Task::count()) {
+            $requestedTask = Task::find($id);
+            $updatedValues = $request->all();
+            $requestedTask->update($updatedValues);
+            return response()->json(["success" => "Task has been updated successfully !", "status" => 200]);
+        } else {
+            // Display an error message with 404 status
+            return response()->json(["error" => "Task not found !", "status" => 404]);
+        }
     }
 
     /**
